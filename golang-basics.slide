@@ -1,0 +1,32 @@
+Go Programming Language Basics
+(Language Basics)
+15:04 10 Jun 2018
+Tags: golang, basics, structs, interfaces, slices, maps
+
+Tarun Elankath
+Development Architect, SAP Labs India
+tarun.ramakrishna.elankath@sap.com
+@lenkite
+
+* Overview
+
+This resumes the course from slices. 
+Please look at first 20 slides of the old version of the that covers basic types and looping constructs at
+
+.link https://github.com/lenkite/RETIRED-golang-course 
+
+This new version of the course will be updated with initial slides later.
+
+For faster revision, please look at the Go cheat sheet
+.link https://devhints.io/go
+
+* Slices (Container, Reference Type)
+
+  Slices are dynamically-sized, flexible view into an array. Slices are a
+  _reference type_. A slice is a  *descriptor* of an array segment that
+  consists of:
+    * pointer to array
+    * length of the segment
+    * capacity (length of backing array)
+
+Some Text
