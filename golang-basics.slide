@@ -1,6 +1,6 @@
-Go Programming Language Basics
+Go Programming Language 
 (Language Basics)
-15:04 10 Jun 2018
+15:04 08 Jul 2018
 Tags: golang, basics, structs, interfaces, slices, maps
 
 Tarun Elankath
@@ -8,25 +8,91 @@ Development Architect, SAP Labs India
 tarun.ramakrishna.elankath@sap.com
 @lenkite
 
-* Overview
+* What will not be convered
 
-This resumes the course from slices. 
-Please look at first 20 slides of the old version of the that covers basic types and looping constructs at
+* Packages
 
-.link https://github.com/lenkite/RETIRED-golang-course 
+A Go program is stored in one or more files whose names end in .go. Each file
+begins with a package declaration. Programs start in package `main`. 
+By convention, pkg name is the same as _last_element_ of import path.
 
-This new version of the course will be updated with initial slides later.
+* Function Basics - Declarations
 
-For faster revision, please look at the Go cheat sheet
-.link https://devhints.io/go
+Declared via `func`, function name, list of params, optional list of results and a body.
+
+For single result or no result parenthesis is optional. 
+
+A sequence of parameters or results of the same type can be factored so that
+the type itself is written only once.
+
+  func name(parameter-list) (result-list) {
+    body
+  }
+
+  func hypot(x, y float64) float64 { // params of same type 'factored' so type declared once
+           return math.Sqrt(x*x + y*y)
+  }
+  fmt.Println(hypot(3, 4)) // "5"
+
+  func greet(string person) {
+    fmt.Println("Hello", person)
+  }
+  greet("Megha")
+
+* Function Basics - Signatures
+Two functions have the same type (aka signature) if they have the same sequence
+of parameter types and the same sequence of result types. Names of parameters
+and result don't matter.
+
+These two declarations are equivalent:
+  
+     func f(i, j, k int, s, t string)                { /* ... */ }
+     func f(i int, j int, k int, s string, t string) { /* ... */ }
+
+Go does not support: function overloading, default parameter values, named input parameters (like Kotlin/Swift/Python)
+These were _deliberate_ design decisions for simplicity/performance/interop. 
+
+However, _named_ result parameters are supported for 'convenience'. The reason is
+for performance and access in nested functions/closures.
+
+
+* Function Basics - Multiple Return Values and Named Results
+
+.play samples/func1/multiple-returns.go 
+
+
+
+* Arrays (Composite Value Type)
+
+_Fixed-length_ sequence of zero or more elements of a specific type. Rarely
+used in Go except in math domain.
+
+
 
 * Slices (Container, Reference Type)
 
-  Slices are dynamically-sized, flexible view into an array. Slices are a
-  _reference type_. A slice is a  *descriptor* of an array segment that
-  consists of:
-    * pointer to array
-    * length of the segment
-    * capacity (length of backing array)
+Slices are dynamically-sized, flexible view into an array. Slices are a
+_reference type_. A slice is a  *descriptor* of an array segment that
+consists of:
 
-Some Text
+- pointer to array
+- length of the segment
+- capacity (length of backing array)
+
+
+* Package time
+Package  time provides functionality for measuring, displaying and parsing time
+
+*type*time.Time*
+Time represents an instance in time with nanosecond precision. A struct with
+all fields package hidden (unexported) but _many_ method defineds. Internally contains
+location (time zone) and monotonic clock reading. 
+
+.play samples/time1/time.go  /^func main/,/^}/
+
+* Formatting/Parsing Times
+Time can be formatted with `time.Format` method and parsed with `time.Parse`
+function. Both of these take layout strings. Layouts can be predefined constant strings 
+or an _example_layout_ based on taking one or more components of the _reference_ time
+
+  Mon Jan 2 15:04:05 MST 2006 //Has 8 components, day of week, month, day of month, etc 
